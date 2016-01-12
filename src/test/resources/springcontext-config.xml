@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/tx
+  http://www.springframework.org/schema/tx/spring-tx.xsd
+  http://www.springframework.org/schema/aop
+  http://www.springframework.org/schema/aop/spring-aop.xsd
+  http://www.springframework.org/schema/context 
+  http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 扫描注解Repository -->
+  	<!-- use-default-filters="false" 只扫描指定的注解 -->
+    <context:component-scan base-package="nuaa.ggx.pos.collector.dao" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+
+  	<!-- 扫描注解Service -->
+  	<!-- use-default-filters="false" 只扫描指定的注解 -->
+    <context:component-scan base-package="nuaa.ggx.pos.collector.service" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:hibernate.properties</value>
+                <value>classpath:task.properties</value>
+            </list>
+        </property>
+    </bean>
+
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="alias" value="proxoolDataSource"/>
+		<property name="driver" value="${connection.driver_class}" />
+		<property name="driverUrl" value="${connection.url}" />
+		<property name="user" value="${connection.username}" />
+		<property name="password" value="${connection.password}" />
+	    <property name="statistics" value="${proxool.statistics}" />
+		<property name="maximumConnectionCount" value="${proxool.maximum.connection.count}"/>
+		<property name="minimumConnectionCount" value="${proxool.minimum.connection.count}"/>		
+		<property name="simultaneousBuildThrottle" value="${proxool.simultaneous.build.throttle}"/>
+	</bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+    	<property name="dataSource" ref="dataSource"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.query.substitutions">${hibernate.query.substitutions}</prop>
+                <prop key="hibernate.default_batch_fetch_size">${hibernate.default_batch_fetch_size}</prop>
+                <prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
+                <prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">${hibernate.bytecode.use_reflection_optimizer}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>      
+                <prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
+                <prop key="hibernate.current_session_context_class">${hibernate.current_session_context_class}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="net.sf.ehcache.configurationResourceName">${net.sf.ehcache.configurationResourceName}</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">  
+            <list>  
+                <value>nuaa.ggx.pos.collector.model.TTrendDay</value>
+            </list>  
+        </property>  
+  	</bean>
+
+    <!-- 开启注解事务 只对当前配置文件有效 注解事务和下面的声明式事务只需选择其中一种，推荐用声明式事务 -->
+	<!-- <aop:aspectj-autoproxy expose-proxy="true"/>	
+  	<tx:annotation-driven transaction-manager="h4TManager"/> -->
+  	
+  	<!-- 声明式事务配置开始 -->
+    <bean id="h4TManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <tx:advice id="h4TAdvice" transaction-manager="h4TManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="merge*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <!--hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到-->
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="*" propagation="REQUIRED" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config expose-proxy="true">
+        <!-- 对基类业务逻辑层实施事务 -->
+        <aop:pointcut id="h4TPointcut" expression="execution(* nuaa.ggx.pos.collector.service..*.*(..))" />
+        <aop:advisor advice-ref="h4TAdvice" pointcut-ref="h4TPointcut"/>
+    </aop:config>
+    <!-- 声明式事务配置结束 -->
+    
+    <bean id="trendAnalyseJob" class="nuaa.ggx.pos.collector.service.action.TrendAnalyseJob">
+    </bean>
+    
+    <bean id="trendAnalyseJobTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="TrendAnalyseJob" />
+		</property>
+		<property name="targetMethod">
+			<value>execute</value>
+		</property>
+		<property name="concurrent">
+			<value>false</value>
+		</property>
+	</bean>
+	
+	<bean id="trendAnalyseJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="trendAnalyseJobTask" />
+		</property>
+		<property name="cronExpression">
+			<value>${task.trendAnalyseJob.cycle}</value>
+		</property>
+	</bean>
+	
+	<bean id="startQuartz" lazy-init="false"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="trendAnalyseJobTrigger"/>
+			</list>
+		</property>
+		<property name="autoStartup" value="true" />
+		<property name="schedulerName" value="cronScheduler" />
+	</bean>
+</beans>

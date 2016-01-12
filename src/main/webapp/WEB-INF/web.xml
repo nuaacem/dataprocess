@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>dataprocess</display-name>
+  <!-- 设置servlet编码开始 -->
+
+    <!-- 设置servlet编码结束 -->  
+    
+    <!-- Spring配置文件开始  -->    
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:springcontext-config.xml
+        </param-value>
+    </context-param>
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    <!-- Spring配置文件结束 -->
+    
+    <!-- Spring MVC配置文件开始 -->
+    <!-- 浏览器不支持put,delete等method,由该filter将/example?_method=delete转换为标准的http delete方法 -->
+    <!-- <filter>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <servlet-name>nuaacempos</servlet-name>
+    </filter-mapping> -->
+    <!-- 浏览器不支持put,delete等method,由该filter将/example?_method=delete转换为标准的http delete方法 -->
+    
+    <!-- Spring MVC配置文件结束 -->
+    
+</web-app>
