@@ -6,8 +6,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import nuaa.ggx.pos.dataprocess.dao.interfaces.IBaseDao;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.LockOptions;
@@ -16,6 +14,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import nuaa.ggx.pos.dataprocess.dao.interfaces.IBaseDao;
 
 
 /**

@@ -1,5 +1,10 @@
 package nuaa.ggx.pos.dataprocess.util;
 
-public class Constants {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+public class Constants {
+	
+	public static ExecutorService LDA_TRAIN_POOL = Executors
+			.newFixedThreadPool(10);
 }
