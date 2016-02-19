@@ -5,6 +5,5 @@ import java.util.concurrent.Executors;
 
 public class Constants {
 	
-	public static ExecutorService LDA_TRAIN_POOL = Executors
-			.newFixedThreadPool(10);
+	public static ExecutorService LDA_TRAIN_POOL = Executors.newFixedThreadPool(10);
 }

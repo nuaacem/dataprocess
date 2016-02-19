@@ -6,6 +6,7 @@ import nuaa.ggx.pos.dataprocess.model.Domain;
 import nuaa.ggx.pos.dataprocess.service.impl.DomainService;
 
 public class Constants {
+	
 	public static final long BUFFER_SIZE_LONG = 1000000;
 	public static final short BUFFER_SIZE_SHORT = 512;
 	
@@ -19,4 +20,5 @@ public class Constants {
 	public static final int LIKE_RATE = 1;
 
 	public static final List<Domain> DOMAINS = DomainService.getDomains();
+	
 }

@@ -42,15 +42,6 @@ public class DomainDao {
 					domain.setId(rs.getInt(1));
 					domain.setDomainId(rs.getString(2));
 					domain.setDomain(rs.getString(3));
-					String topicsString = rs.getString(4);
-					if (topicsString != null && !"".equals(topicsString)) {
-						String[] ss = topicsString.split(",");
-						List<Integer> tlist = new ArrayList<Integer>();
-						for (String string : ss) {
-							tlist.add(Integer.parseInt(string));
-						}
-						domain.setTopics(tlist);
-					}
 				}
 			}
 		} catch (SQLException e) {
@@ -80,16 +71,6 @@ public class DomainDao {
 					domain.setId(rs.getInt(1));
 					domain.setDomainId(rs.getString(2));
 					domain.setDomain(rs.getString(3));
-					String topicsString = rs.getString(4);
-					if (topicsString != null && !"".equals(topicsString)) {
-						String[] ss = topicsString.split(",");
-						List<Integer> tlist = new ArrayList<Integer>();
-						for (String string : ss) {
-							tlist.add(Integer.parseInt(string));
-						}
-						domain.setTopics(tlist);
-					}
-					
 					domainList.add(domain);
 				}
 			}
