@@ -16,13 +16,13 @@
 
 	<!-- 扫描注解Repository -->
   	<!-- use-default-filters="false" 只扫描指定的注解 -->
-    <context:component-scan base-package="nuaa.ggx.pos.collector.dao" use-default-filters="false">
+    <context:component-scan base-package="nuaa.ggx.pos.dataprocess.dao" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
 
   	<!-- 扫描注解Service -->
   	<!-- use-default-filters="false" 只扫描指定的注解 -->
-    <context:component-scan base-package="nuaa.ggx.pos.collector.service" use-default-filters="false">
+    <context:component-scan base-package="nuaa.ggx.pos.dataprocess.service" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
 
@@ -70,7 +70,8 @@
         </property>
         <property name="annotatedClasses">  
             <list>  
-                <value>nuaa.ggx.pos.collector.model.TTrendDay</value>
+                <value>nuaa.ggx.pos.dataprocess.model.TTrendDay</value>
+                <value>nuaa.ggx.pos.dataprocess.model.TTrendHour</value>
             </list>  
         </property>  
   	</bean>
@@ -97,18 +98,18 @@
     </tx:advice>
     <aop:config expose-proxy="true">
         <!-- 对基类业务逻辑层实施事务 -->
-        <aop:pointcut id="h4TPointcut" expression="execution(* nuaa.ggx.pos.collector.service..*.*(..))" />
+        <aop:pointcut id="h4TPointcut" expression="execution(* nuaa.ggx.pos.dataprocess.service..*.*(..))" />
         <aop:advisor advice-ref="h4TAdvice" pointcut-ref="h4TPointcut"/>
     </aop:config>
     <!-- 声明式事务配置结束 -->
     
-    <bean id="trendAnalyseJob" class="nuaa.ggx.pos.collector.service.action.TrendAnalyseJob">
+    <bean id="trendAnalyseJob" class="nuaa.ggx.pos.dataprocess.action.impl.TrendAnalyseJob">
     </bean>
     
     <bean id="trendAnalyseJobTask"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
-			<ref bean="TrendAnalyseJob" />
+			<ref bean="trendAnalyseJob" />
 		</property>
 		<property name="targetMethod">
 			<value>execute</value>

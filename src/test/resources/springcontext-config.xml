@@ -71,6 +71,7 @@
         <property name="annotatedClasses">  
             <list>  
                 <value>nuaa.ggx.pos.collector.model.TTrendDay</value>
+                <value>nuaa.ggx.pos.collector.model.TTrendHour</value>
             </list>  
         </property>  
   	</bean>
