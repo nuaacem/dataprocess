@@ -70,8 +70,12 @@
         </property>
         <property name="annotatedClasses">  
             <list>  
+                <value>nuaa.ggx.pos.dataprocess.model.TKeyword</value>
+                <value>nuaa.ggx.pos.dataprocess.model.TSubject</value>
                 <value>nuaa.ggx.pos.dataprocess.model.TTrendDay</value>
                 <value>nuaa.ggx.pos.dataprocess.model.TTrendHour</value>
+                <value>nuaa.ggx.pos.dataprocess.model.TUser</value>
+                <value>nuaa.ggx.pos.dataprocess.model.TWeiboContentSeg</value>
             </list>  
         </property>  
   	</bean>

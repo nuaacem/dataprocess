@@ -1,0 +1,17 @@
+#MyEclipse Hibernate Properties
+#Wed May 04 14:13:45 CST 2016
+genVersionTag=false
+sessionFactoryName=nuaa.ggx.pos.dataprocess.util.HibernateSessionFactory
+genAnnotations=false
+configFile=/dataprocess/src/main/resources/hibernate.cfg.xml
+reStrategyClass=
+sessionFactoryId=
+profile=
+detectM2M=false
+genBasicCompId=false
+keyGenerator=
+createConfigFile=true
+basePersistenceClass=
+detectO2O=false
+useJavaTypes=true
+reSettingsFile=
