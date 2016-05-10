@@ -31,7 +31,6 @@ public class TrendDayDao extends BaseDao<TTrendDay> implements ITrendDayDao{
 		return trendDays;
 	}
 
-
 }
 
 

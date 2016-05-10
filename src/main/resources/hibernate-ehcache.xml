@@ -10,7 +10,7 @@
       overflowToDisk="false"/>
 
    <!-- <cache name="com.demo.model.models.User"
-      maxElementsInMemory="2000"
+      maxElementsInMemory="500"
       eternal="false"
       timeToIdleSeconds="3600"
       timeToLiveSeconds="3600"

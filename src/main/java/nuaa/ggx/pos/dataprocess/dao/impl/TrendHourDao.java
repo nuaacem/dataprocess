@@ -32,7 +32,22 @@ public class TrendHourDao extends BaseDao<TTrendHour> implements ITrendHourDao{
 		return trendHours;
 	}
 
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TTrendHour> findByTypeAndOidAndHour(Short type, Integer oid, Integer hour) {
+		// TODO Auto-generated method stub
+		log.debug("finding trendhours by type and oid and hour");
+		List<TTrendHour> trendHours = null;
+		try {
+			Criteria criteria = getSession().createCriteria(TTrendHour.class);
+			criteria.add(Restrictions.and(Restrictions.eq("type", type), Restrictions.eq("oid", oid), Restrictions.eq("hour", hour)));
+			trendHours = criteria.list();
+		} catch (RuntimeException re) {
+            log.error("finding trendhours failed", re);
+            throw re;
+		}
+		return trendHours;
+	}
 }
 
 

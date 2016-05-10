@@ -32,7 +32,6 @@ public class TSubject implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = -1761111885338940044L;
 	private Integer id;
-	private TUser TUser;
 	private String subjectName;
 	private String subjectDesc;
 	private Timestamp createTime;
@@ -49,10 +48,9 @@ public class TSubject implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TSubject(TUser TUser, String subjectName, String subjectDesc,
+	public TSubject(String subjectName, String subjectDesc,
 			Timestamp createTime, Timestamp updateTime, Integer totalNum, 
 			Integer updateNum, Integer state, Set<TKeyword> TKeywords) {
-		this.TUser = TUser;
 		this.subjectName = subjectName;
 		this.subjectDesc = subjectDesc;
 		this.createTime = createTime;
@@ -73,16 +71,6 @@ public class TSubject implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	public TUser getTUser() {
-		return this.TUser;
-	}
-
-	public void setTUser(TUser TUser) {
-		this.TUser = TUser;
 	}
 
 	@Column(name = "subject_name", length = 20)

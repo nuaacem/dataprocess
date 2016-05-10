@@ -7,5 +7,6 @@ import nuaa.ggx.pos.dataprocess.model.TTrendHour;
 
 public interface ITrendHourDao extends IBaseDao<TTrendHour> {
 	public List<TTrendHour> findByTypeAndOid(Short type, Integer oid);
+	public List<TTrendHour> findByTypeAndOidAndHour(Short type, Integer oid, Integer hour);
 }
 

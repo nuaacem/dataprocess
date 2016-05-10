@@ -25,7 +25,8 @@ public class TWeiboContentSeg implements java.io.Serializable {
 	private String theme;
 	private Integer count;
 	private String pubtime;
-
+	private Integer pole;
+	
 	// Constructors
 
 	/** default constructor */
@@ -34,12 +35,13 @@ public class TWeiboContentSeg implements java.io.Serializable {
 
 	/** full constructor */
 	public TWeiboContentSeg(String wid, String txt, String theme,
-			Integer count, String pubtime) {
+			Integer count, String pubtime, Integer pole) {
 		this.wid = wid;
 		this.txt = txt;
 		this.theme = theme;
 		this.count = count;
 		this.pubtime = pubtime;
+		this.pole = pole;
 	}
 
 	// Property accessors
@@ -99,4 +101,12 @@ public class TWeiboContentSeg implements java.io.Serializable {
 		this.pubtime = pubtime;
 	}
 
+	@Column(name = "pole", length = 16)
+	public Integer getPole() {
+		return this.pole;
+	}
+
+	public void setPole(Integer pole) {
+		this.pole = pole;
+	}
 }

@@ -1,9 +1,7 @@
 package nuaa.ggx.pos.dataprocess.service.impl;
 
-import java.util.List;
 import nuaa.ggx.pos.dataprocess.dao.interfaces.IKeywordDao;
 import nuaa.ggx.pos.dataprocess.dao.interfaces.ISubjectDao;
-import nuaa.ggx.pos.dataprocess.dao.interfaces.IUserDao;
 import nuaa.ggx.pos.dataprocess.model.TSubject;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ISubjectManageService;
 
@@ -16,19 +14,11 @@ public class SubjectManageService implements ISubjectManageService{
 	private ISubjectDao subjectDao;
 	
 	@Autowired
-	private IUserDao userDao;
-	
-	@Autowired
 	private IKeywordDao keywordDao;
 	
 	@Override
 	public void findByIdlist() {
 		//不会
-	}
-
-	@Override
-	public List<TSubject> findByUserId(Integer userId) {
-		return subjectDao.findByUserID(userId);
 	}
 
 	@Override
