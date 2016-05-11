@@ -36,7 +36,7 @@ public class TrendHourDao extends BaseDao<TTrendHour> implements ITrendHourDao{
 	@Override
 	public List<TTrendHour> findByTypeAndOidAndHour(Short type, Integer oid, Integer hour) {
 		// TODO Auto-generated method stub
-		log.debug("finding trendhours by type and oid and hour");
+		log.debug("finding trendhours by type, oid and hour");
 		List<TTrendHour> trendHours = null;
 		try {
 			Criteria criteria = getSession().createCriteria(TTrendHour.class);

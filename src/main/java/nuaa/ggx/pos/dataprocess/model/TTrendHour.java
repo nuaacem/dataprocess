@@ -43,10 +43,9 @@ public class TTrendHour implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TTrendHour(Integer id, Integer oid, Short type, Integer hour,
+	public TTrendHour(Integer oid, Short type, Integer hour,
 			Integer totalNum, Integer positiveNum, Integer neutralNum,
 			Integer negativeNum) {
-		this.id = id;
 		this.oid = oid;
 		this.type = type;
 		this.hour = hour;

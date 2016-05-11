@@ -43,10 +43,9 @@ public class TTrendDay implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TTrendDay(Integer id, Integer oid, Short type, Integer day,
+	public TTrendDay(Integer oid, Short type, Integer day,
 			Integer totalNum, Integer positiveNum, Integer neutralNum,
 			Integer negativeNum) {
-		this.id = id;
 		this.oid = oid;
 		this.type = type;
 		this.day = day;

@@ -42,16 +42,13 @@ public class KeywordDao extends BaseDao<TKeyword> implements IKeywordDao{
 		return keywordid;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<String> getKeywordsName() {
+	public List<String> getAllKeywordsName() {
 		log.debug("getting all keywordsname");
 		List<String> keywordsName = new ArrayList<>();
 		List<TKeyword> keywords;
 		try {
-			Criteria criteria = getSession().createCriteria(TKeyword.class);
-			criteria.add(Restrictions.gt("id", 0));
-			keywords = criteria.list();
+			keywords = listAll();
 			for (TKeyword keyword : keywords) {
 				keywordsName.add(keyword.getKeyword());
 			}
@@ -61,6 +58,24 @@ public class KeywordDao extends BaseDao<TKeyword> implements IKeywordDao{
 		}
 		return keywordsName;
 	}
+
+	@Override
+	public List<Integer> getAllKeywordsId() {
+		log.debug("getting all keywordsid");
+		List<Integer> keywordsId = new ArrayList<>();
+		List<TKeyword> keywords;
+		try {
+			keywords = listAll();
+			for (TKeyword keyword : keywords) {
+				keywordsId.add(keyword.getId());
+			}
+		} catch (RuntimeException re) {
+            log.error("getting all keywordsid failed", re);
+            throw re;
+		}
+		return keywordsId;
+	}
+	
 }
 
 

@@ -1,9 +1,10 @@
 package nuaa.ggx.test;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 
 import nuaa.ggx.pos.dataprocess.service.interfaces.IKeywordService;
+import nuaa.ggx.pos.dataprocess.service.interfaces.ISubjectManageService;
+import nuaa.ggx.pos.dataprocess.service.interfaces.ITrendDayManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ITrendHourManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.IWeiboContentSegService;
 
@@ -20,13 +21,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class WeiboContentSegServiceTEST extends AbstractJUnit4SpringContextTests {
 
 	@Autowired
-	IWeiboContentSegService iWeiboContentSegService;
+	private IWeiboContentSegService iWeiboContentSegService;
 	
 	@Autowired
-	ITrendHourManageService iTrendHourManageService;
+	private ITrendHourManageService iTrendHourManageService;
 	
 	@Autowired
-	IKeywordService iKeywordService;
+	private ITrendDayManageService iTrendDayManageService;
+	
+	@Autowired
+	private IKeywordService iKeywordService;
+	
+	@Autowired
+	private ISubjectManageService iSubjectManageService;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -35,15 +43,17 @@ public class WeiboContentSegServiceTEST extends AbstractJUnit4SpringContextTests
 	public void test() {
 		while (iWeiboContentSegService.updateWeioboContentSeg()) {
 		}
-		/*List<String> keywordsName = iKeywordService.getKeywordsName();
+		List<String> keywordsName = iKeywordService.getAllKeywordsName();
 		for (String keywordname : keywordsName) {
-			iTrendHourManageService.updateTrendHourKeyword(keywordname);
-		}*/
-		iTrendHourManageService.updateTrendHourKeyword("莆田");
-		HashMap<String, Integer[]> hourPoleNum = iWeiboContentSegService.getHourPoleNumByKeyword("莆田");
-		for (String key : hourPoleNum.keySet()) {
-			System.out.println(hourPoleNum.get(key)[0]);
+			iTrendHourManageService.updateTrendHourByKeyword(keywordname);
 		}
+		for (String keywordname : keywordsName) {
+			iTrendDayManageService.updateTrendDayByKeyword(keywordname);
+		}
+		iTrendHourManageService.updateTrendHourBySubjects();
+		iTrendDayManageService.updateTrendDayBySubjects();
+		iKeywordService.updateKeywordsNum();
+		iSubjectManageService.updateSubjectsNum();
 	}
 
 }

@@ -6,6 +6,8 @@ import nuaa.ggx.pos.dataprocess.model.TTrendDay;
 
 public interface ITrendDayManageService {
 	public List<TTrendDay> findByTypeAndOid(Short type, Integer oid);
+	public Boolean updateTrendDayByKeyword(String keyword);
+	public Boolean updateTrendDayBySubjects();
     //public void save(TTrendHour trendhour);
     //public void deleteByTypeAndOid(Short type, Integer oid);
 }

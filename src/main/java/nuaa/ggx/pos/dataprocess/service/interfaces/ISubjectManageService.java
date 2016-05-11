@@ -1,5 +1,7 @@
 package nuaa.ggx.pos.dataprocess.service.interfaces;
 
+import java.util.HashMap;
+
 import nuaa.ggx.pos.dataprocess.model.TSubject;
 
 
@@ -11,4 +13,6 @@ public interface ISubjectManageService {
 	public void delete(Integer id);
 	public void update(TSubject subject);
 	public TSubject merge(TSubject subject);
+	public HashMap<Integer, Integer[]> getAllSubjectsIdToKeywordsId();
+	public Boolean updateSubjectsNum();
 }

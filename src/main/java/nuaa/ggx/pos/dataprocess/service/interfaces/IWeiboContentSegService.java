@@ -4,5 +4,5 @@ import java.util.HashMap;
 
 public interface IWeiboContentSegService {
 	public Boolean updateWeioboContentSeg();
-	public HashMap<String, Integer[]> getHourPoleNumByKeyword(String keyword);
+	public HashMap<String, Integer[]> getHourOrDayPoleNumByKeyword(String keyword, Boolean hourOrDay);
 }

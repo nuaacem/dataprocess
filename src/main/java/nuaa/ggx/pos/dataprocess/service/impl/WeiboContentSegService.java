@@ -7,6 +7,7 @@ import nuaa.ggx.pos.dataprocess.dao.interfaces.IWeiboContentSegDao;
 import nuaa.ggx.pos.dataprocess.model.TWeiboContentSeg;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ISentimentWordPoleService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.IWeiboContentSegService;
+import nuaa.ggx.pos.dataprocess.util.Constants;
 import nuaa.ggx.pos.dataprocess.util.WordsSplit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,19 +39,22 @@ public class WeiboContentSegService implements IWeiboContentSegService{
 	}
 	
 	@Override
-	public HashMap<String, Integer[]> getHourPoleNumByKeyword(String keyword) {
+	public HashMap<String, Integer[]> getHourOrDayPoleNumByKeyword(String keyword, Boolean hourOrDay) {
 		List<TWeiboContentSeg> positiveList = weiboContentSegDao.getPositiveTWeiboContentSegListByKeyword(keyword);
 		List<TWeiboContentSeg> neutralList = weiboContentSegDao.getNeutralTWeiboContentSegListByKeyword(keyword);
 		List<TWeiboContentSeg> negativeList = weiboContentSegDao.getNegativeTWeiboContentSegListByKeyword(keyword);
 		HashMap<String, Integer[]> hourPoleNum = new HashMap<>();
 		String temp;
+		String reg = ":";
+		if(hourOrDay == Constants.IS_DAY)
+			reg = " ";
 		Integer[] initPositiveNum = {1, 0, 0};
 		Integer[] initNeutralNum = {0, 1, 0};
 		Integer[] initNegativeNum = {0, 0, 1};
 		Integer[] poleNum;
 		for (TWeiboContentSeg tWeiboContentSeg : positiveList) {
 			temp = tWeiboContentSeg.getPubtime();
-			temp = temp.substring(0, temp.indexOf(":"));
+			temp = temp.substring(0, temp.indexOf(reg));
 			if(hourPoleNum.containsKey(temp)){
 				poleNum = hourPoleNum.get(temp).clone();
 				poleNum[0] = poleNum[0] + 1;
@@ -62,7 +66,7 @@ public class WeiboContentSegService implements IWeiboContentSegService{
 		}
 		for (TWeiboContentSeg tWeiboContentSeg : neutralList) {
 			temp = tWeiboContentSeg.getPubtime();
-			temp = temp.substring(0, temp.indexOf(":"));
+			temp = temp.substring(0, temp.indexOf(reg));
 			if(hourPoleNum.containsKey(temp)){
 				poleNum = hourPoleNum.get(temp).clone();
 				poleNum[1] = poleNum[1] + 1;
@@ -74,7 +78,7 @@ public class WeiboContentSegService implements IWeiboContentSegService{
 		}
 		for (TWeiboContentSeg tWeiboContentSeg : negativeList) {
 			temp = tWeiboContentSeg.getPubtime();
-			temp = temp.substring(0, temp.indexOf(":"));
+			temp = temp.substring(0, temp.indexOf(reg));
 			if(hourPoleNum.containsKey(temp)){
 				poleNum = hourPoleNum.get(temp).clone();
 				poleNum[2] = poleNum[2] + 1;

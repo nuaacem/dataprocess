@@ -28,6 +28,10 @@ public class TKeyword implements java.io.Serializable {
 	private static final long serialVersionUID = 4297702156026003110L;
 	private Integer id;
 	private String keyword;
+	private Integer totalNum;
+	private Integer positiveNum;
+	private Integer neutralNum;
+	private Integer negativeNum;
 	private Integer updateNum;
 	private Timestamp updateTime;
 	private Integer state;
@@ -71,6 +75,42 @@ public class TKeyword implements java.io.Serializable {
 		this.keyword = keyword;
 	}
 
+	@Column(name = "total_num")
+	public Integer getTotalNum() {
+		return this.totalNum;
+	}
+
+	public void setTotalNum(Integer totalNum) {
+		this.totalNum = totalNum;
+	}
+	
+	@Column(name = "positive_num")
+	public Integer getPositiveNum() {
+		return this.positiveNum;
+	}
+
+	public void setPositiveNum(Integer positiveNum) {
+		this.positiveNum = positiveNum;
+	}
+	
+	@Column(name = "neutral_num")
+	public Integer getNeutralNum() {
+		return this.neutralNum;
+	}
+
+	public void setNeutralNum(Integer neutralNum) {
+		this.neutralNum = neutralNum;
+	}
+	
+	@Column(name = "negative_num")
+	public Integer getNegativeNum() {
+		return this.negativeNum;
+	}
+
+	public void setNegativeNum(Integer negativeNum) {
+		this.negativeNum = negativeNum;
+	}
+	
 	@Column(name = "update_num")
 	public Integer getUpdateNum() {
 		return this.updateNum;

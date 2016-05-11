@@ -6,6 +6,7 @@ import nuaa.ggx.pos.dataprocess.model.TKeyword;
 
 public interface IKeywordDao extends IBaseDao<TKeyword> {
 	public int getIdByKeyword(String keyword);
-	public List<String> getKeywordsName();
+	public List<String> getAllKeywordsName();
+	public List<Integer> getAllKeywordsId();
 }
 
