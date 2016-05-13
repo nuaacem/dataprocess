@@ -1,5 +1,6 @@
 package nuaa.ggx.test;
 
+import java.util.Date;
 import java.util.List;
 
 import nuaa.ggx.pos.dataprocess.service.interfaces.IKeywordService;
@@ -41,9 +42,12 @@ public class WeiboContentSegServiceTEST extends AbstractJUnit4SpringContextTests
 
 	@Test
 	public void test() {
+		long startTime = System.currentTimeMillis();
 		while (iWeiboContentSegService.updateWeioboContentSeg()) {
 		}
-		List<String> keywordsName = iKeywordService.getAllKeywordsName();
+		long endTime = System.currentTimeMillis();
+		System.out.println(endTime - startTime + "cbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+		/*List<String> keywordsName = iKeywordService.getAllKeywordsName();
 		for (String keywordname : keywordsName) {
 			iTrendHourManageService.updateTrendHourByKeyword(keywordname);
 		}
@@ -53,7 +57,7 @@ public class WeiboContentSegServiceTEST extends AbstractJUnit4SpringContextTests
 		iTrendHourManageService.updateTrendHourBySubjects();
 		iTrendDayManageService.updateTrendDayBySubjects();
 		iKeywordService.updateKeywordsNum();
-		iSubjectManageService.updateSubjectsNum();
+		iSubjectManageService.updateSubjectsNum();*/
 	}
 
 }
