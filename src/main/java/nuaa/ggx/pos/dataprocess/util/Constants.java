@@ -14,5 +14,5 @@ public class Constants {
 	public final static short IS_SUBJECT = 1;
 	public final static short IS_KEYWORD = 0;
 	public static ExecutorService WEIBO_CRAWLER_POOL = Executors
-			.newFixedThreadPool(10);
+			.newFixedThreadPool(4);
 }
