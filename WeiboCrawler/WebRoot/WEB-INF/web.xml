@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <servlet>
+    <servlet-name>Crawler</servlet-name>
+    <servlet-class>cn.cem.Servlet.CrawlerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Crawler</servlet-name>
+    <url-pattern>/getCrawler</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CmtCrawler</servlet-name>
+    <servlet-class>cn.cem.Servlet.CmtCrawlerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CmtCrawler</servlet-name>
+    <url-pattern>/getCmtCrawler</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetResult</servlet-name>
+    <servlet-class>cn.cem.Servlet.GetResultServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetResult</servlet-name>
+    <url-pattern>/getResult</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetComment</servlet-name>
+    <servlet-class>cn.cem.Servlet.GetCommentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetComment</servlet-name>
+    <url-pattern>/getComment</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UserCheck</servlet-name>
+    <servlet-class>cn.cem.Servlet.UserCheckServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>SaveExcelServlet</servlet-name>
+    <servlet-class>cn.cem.Servlet.SaveExcelServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>FileDownServlet</servlet-name>
+    <servlet-class>cn.cem.Servlet.FileDownServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserCheck</servlet-name>
+    <url-pattern>/userCheck</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SaveExcelServlet</servlet-name>
+    <url-pattern>/servlet/SaveExcelServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileDownServlet</servlet-name>
+    <url-pattern>/servlet/FileDownServlet</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>Online</filter-name>
+    <filter-class>cn.cem.Filter.OnlineFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Online</filter-name>
+    <url-pattern>/show/*</url-pattern>
+  </filter-mapping>
+  <welcome-file-list>
+    <welcome-file>/login.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
