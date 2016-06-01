@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository("SubjectDao")
 public class SubjectDao extends BaseDao<TSubject> implements ISubjectDao{
 	
-	private static Logger log = Logger.getLogger(TSubject.class);
+	private static Logger log = Logger.getLogger(SubjectDao.class);
 	
 	@Override
 	public Set<Integer> getAllSubjectsId() {

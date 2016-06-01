@@ -11,7 +11,7 @@ import nuaa.ggx.pos.dataprocess.service.interfaces.ISubjectManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ITrendHourManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.IWeiboContentSegService;
 import nuaa.ggx.pos.dataprocess.util.Constants;
-import nuaa.ggx.pos.dataprocess.util.WordsSplit;
+import nuaa.ggx.pos.dataprocess.util.TimeWordsSplit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class TrendHourManageService implements ITrendHourManageService{
 		}
 		for (String key : hourPoleNum.keySet()) 
 		{
-			int hour = (int)WordsSplit.getKeyHours(key) + 8;//本地时间比GMT格式时间早八个小时
+			int hour = (int)TimeWordsSplit.getKeyHours(key) + 8;//本地时间比GMT格式时间早八个小时
 			int oid = iKeywordDao.getIdByKeyword(keyword);
 			Integer[] poleNum = hourPoleNum.get(key);
 			TTrendHour tTrendHour = new TTrendHour();

@@ -2,17 +2,7 @@ package nuaa.ggx.pos.dataprocess.util;
 
 import java.util.Date;
 
-public class WordsSplit {
-	public static String[] wordsSplit(String wordsList) {
-		String[] str = wordsList.split(" ");
-		for (int i=0; i<str.length; i++) {
-			if(!(str[i].equals("") || str[i] == null) && str[i].indexOf('/') > 0){
-				str[i] = str[i].substring(0, str[i].lastIndexOf('/'));
-			}
-		}
-		return str;
-	}
-
+public class TimeWordsSplit {
 	public static long getKeyHours(String key) {
 		String dateString = key.substring(0, key.indexOf(" "));
 		int hour = Integer.parseInt(key.substring(key.indexOf(" ") + 1));
@@ -37,6 +27,6 @@ public class WordsSplit {
 		Date now = new Date();
 		now.setHours(8);
 		System.out.println(now.getTime()/(1000*60*60*24));
-		System.out.println(getKeyDays("1970-01-1 23"));
+		System.out.println(getKeyDays("2016-05-31"));
 	}
 }

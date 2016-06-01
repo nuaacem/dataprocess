@@ -1,14 +1,18 @@
 package nuaa.ggx.pos.dataprocess.service.impl;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import nuaa.ggx.pos.dataprocess.dao.interfaces.IConsensusDao;
 import nuaa.ggx.pos.dataprocess.dao.interfaces.IWeiboContentSegDao;
+import nuaa.ggx.pos.dataprocess.model.TConsensus;
 import nuaa.ggx.pos.dataprocess.model.TWeiboContentSeg;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ISentimentWordPoleService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.IWeiboContentSegService;
+import nuaa.ggx.pos.dataprocess.util.CallNLPIR;
 import nuaa.ggx.pos.dataprocess.util.Constants;
-import nuaa.ggx.pos.dataprocess.util.WordsSplit;
+import nuaa.ggx.pos.dataprocess.util.TimeWordsSplit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,41 @@ public class WeiboContentSegService implements IWeiboContentSegService{
 	@Autowired
 	private ISentimentWordPoleService sentimentWordPoleService;
 	
+	@Autowired
+	private IConsensusDao iConsensusDao;
+	
+	@Override
+	public Boolean saveWeioboContentSeg() {
+		TWeiboContentSeg weiboContentSeg;
+		TConsensus consensus;
+		List<TConsensus> tConsensuses = iConsensusDao.getConsensusesWhereStateAreNull();
+		if (tConsensuses.isEmpty()) {
+			return false;
+		}
+		for (TConsensus tConsensus : tConsensuses) {
+			weiboContentSeg = new TWeiboContentSeg();
+			String Words = null, pubTime = null;
+			weiboContentSeg.setWid(tConsensus.getUrl().substring(tConsensus.getUrl().lastIndexOf("/") + 1));
+			try {
+				Words = CallNLPIR.excludeStopWord(CallNLPIR.segWords(tConsensus.getSummary()), " ");//分词，去停用词
+				weiboContentSeg.setTxt(Words);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			weiboContentSeg.setCount(Words.split(" ").length);
+			if (tConsensus.getPublishTime() != null) {
+				pubTime = tConsensus.getPublishTime().toString();
+				weiboContentSeg.setPubtime(pubTime.substring(0, pubTime.lastIndexOf(":")));
+			}
+			weiboContentSegDao.save(weiboContentSeg);
+			
+			consensus = iConsensusDao.loadById(tConsensus.getId());
+			consensus.setState(1);
+			iConsensusDao.attachDirty(consensus);
+		}
+		return true;
+	}
+	
 	@Override
 	public Boolean updateWeioboContentSeg() {
 		TWeiboContentSeg weiboContentSeg;
@@ -30,9 +69,8 @@ public class WeiboContentSegService implements IWeiboContentSegService{
 			return false;
 		}
 		for (TWeiboContentSeg tWeiboContentSeg : tWeiboContentSegs) {
-			
 			weiboContentSeg = weiboContentSegDao.loadById(tWeiboContentSeg.getId());
-			weiboContentSeg.setPole(sentimentWordPoleService.getWordsPole(WordsSplit.wordsSplit(tWeiboContentSeg.getTxt())));
+			weiboContentSeg.setPole(sentimentWordPoleService.getWordsPole(tWeiboContentSeg.getTxt().split(" ")));
 			weiboContentSegDao.attachDirty(weiboContentSeg);
 		}
 		return true;

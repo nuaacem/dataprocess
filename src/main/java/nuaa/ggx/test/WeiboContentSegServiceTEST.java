@@ -1,8 +1,5 @@
 package nuaa.ggx.test;
 
-import java.util.Date;
-import java.util.List;
-
 import nuaa.ggx.pos.dataprocess.service.interfaces.IKeywordService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ISubjectManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ITrendDayManageService;
@@ -35,7 +32,7 @@ public class WeiboContentSegServiceTEST extends AbstractJUnit4SpringContextTests
 	
 	@Autowired
 	private ISubjectManageService iSubjectManageService;
-
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -43,8 +40,13 @@ public class WeiboContentSegServiceTEST extends AbstractJUnit4SpringContextTests
 	@Test
 	public void test() {
 		long startTime = System.currentTimeMillis();
-		while (iWeiboContentSegService.updateWeioboContentSeg()) {
-		}
+		/*try {
+			CallNLPIR.loadUserDict("userdic.txt", true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		iWeiboContentSegService.saveWeioboContentSeg();
 		long endTime = System.currentTimeMillis();
 		System.out.println(endTime - startTime + "cbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 		/*List<String> keywordsName = iKeywordService.getAllKeywordsName();

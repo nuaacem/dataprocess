@@ -11,7 +11,7 @@ import nuaa.ggx.pos.dataprocess.service.interfaces.ISubjectManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ITrendDayManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.IWeiboContentSegService;
 import nuaa.ggx.pos.dataprocess.util.Constants;
-import nuaa.ggx.pos.dataprocess.util.WordsSplit;
+import nuaa.ggx.pos.dataprocess.util.TimeWordsSplit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class TrendDayManageService implements ITrendDayManageService{
 		}
 		for (String key : dayPoleNum.keySet()) 
 		{
-			int day = (int)WordsSplit.getKeyDays(key);
+			int day = (int)TimeWordsSplit.getKeyDays(key);
 			int oid = iKeywordDao.getIdByKeyword(keyword);
 			Integer[] poleNum = dayPoleNum.get(key);
 			TTrendDay tTrendDay = new TTrendDay();

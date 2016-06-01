@@ -1,5 +1,6 @@
 package nuaa.ggx.pos.dataprocess.action.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import nuaa.ggx.pos.dataprocess.service.interfaces.ISubjectManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ITrendDayManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.ITrendHourManageService;
 import nuaa.ggx.pos.dataprocess.service.interfaces.IWeiboContentSegService;
+import nuaa.ggx.pos.dataprocess.util.CallNLPIR;
 import nuaa.ggx.pos.dataprocess.util.Constants;
 
 public class TrendAnalyseJob implements IJob{
@@ -34,6 +36,11 @@ private static Logger log = Logger.getLogger(TrendAnalyseJob.class);
 	private ISubjectManageService iSubjectManageService;
 	
 	public void execute(){
+		try {
+			CallNLPIR.loadUserDict("userdic.txt", true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Constants.WEIBO_CRAWLER_POOL.execute(new ExecuteWork());
 	}
 	
@@ -42,6 +49,7 @@ private static Logger log = Logger.getLogger(TrendAnalyseJob.class);
 		@Override
 		public void run() {
 			try {
+				iWeiboContentSegService.saveWeioboContentSeg();
 				while (iWeiboContentSegService.updateWeioboContentSeg()) {
 				}
 				List<String> keywordsName = iKeywordService.getAllKeywordsName();

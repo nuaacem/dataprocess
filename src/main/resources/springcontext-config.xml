@@ -76,6 +76,7 @@
                 <value>nuaa.ggx.pos.dataprocess.model.TTrendHour</value>
                 <value>nuaa.ggx.pos.dataprocess.model.TWeiboContentSeg</value>
                 <value>nuaa.ggx.pos.dataprocess.model.TSentimentWordPole</value>
+                <value>nuaa.ggx.pos.dataprocess.model.TConsensus</value>
             </list>  
         </property>  
   	</bean>
